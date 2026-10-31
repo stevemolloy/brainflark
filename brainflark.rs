@@ -10,6 +10,8 @@ Brainflark syntax
 ]	Jump back to the matching [ if the cell at the pointer is nonzero
  */
 
+use std::fs;
+
 #[derive(Debug)]
 enum Token {
     IncPtr,
@@ -112,7 +114,10 @@ const MEMSIZE: usize = 1000000;
 fn main() {
     // let source = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.".to_string();
     // let source = "-[-[-->]<<--]>++++.".to_string();
-    let source = "++++++++[>+>++++<<-]>++>>+<[-[>>+<<-]+>>]>+[-<<<[->[+[-]+>++>>>-<<]<[<]>>++++++[<<+++++>>-]+<<++.[-]<<]>.>+[>>]>+]".to_string();
+    // let source = "++++++++[>+>++++<<-]>++>>+<[-[>>+<<-]+>>]>+[-<<<[->[+[-]+>++>>>-<<]<[<]>>++++++[<<+++++>>-]+<<++.[-]<<]>.>+[>>]>+]".to_string();
+
+    let filepath = "./sierpinski.b";
+    let source = fs::read_to_string(filepath).expect("Should have been able to read the file");
 
     let mut vm: VM = VM::from_str(&source);
     vm.run();
