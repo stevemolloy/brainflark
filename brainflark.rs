@@ -11,6 +11,7 @@ Brainflark syntax
  */
 
 use std::fs;
+use std::env;
 
 #[derive(Debug)]
 enum Token {
@@ -112,11 +113,16 @@ impl VM {
 const MEMSIZE: usize = 1000000;
 
 fn main() {
-    // let source = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.".to_string();
-    // let source = "-[-[-->]<<--]>++++.".to_string();
-    // let source = "++++++++[>+>++++<<-]>++>>+<[-[>>+<<-]+>>]>+[-<<<[->[+[-]+>++>>>-<<]<[<]>>++++++[<<+++++>>-]+<<++.[-]<<]>.>+[>>]>+]".to_string();
+    let args: Vec<String> = env::args().collect();
 
-    let filepath = "./sierpinski.b";
+    let programname = &args[0];
+    if args.len() != 2 {
+	eprintln!("ERROR: Please supply a single argument");
+	eprintln!("{} <brainflark_file>", programname);
+	panic!();
+    }
+    let filepath = &args[1];
+    
     let source = fs::read_to_string(filepath).expect("Should have been able to read the file");
 
     let mut vm: VM = VM::from_str(&source);
