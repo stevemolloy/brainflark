@@ -15,6 +15,30 @@ use std::fs;
 use std::io::Write;
 use std::io::Read;
 
+const MEMSIZE: usize = 1000000;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let programname = &args[0];
+    if args.len() != 2 {
+        eprintln!("ERROR: Please supply a brainflark file to run");
+        eprintln!("{} <brainflark_file>", programname);
+        return;
+    }
+    let filepath = &args[1];
+
+    let source = fs::read_to_string(filepath).expect("Should have been able to read the file");
+
+    let mut vm: VM = VM::from_str(&source);
+    if !vm.ready_to_run {
+	eprintln!("ERROR: Compilation failed. Will not run.");
+	return;
+    }
+    
+    vm.run();
+}
+
 #[derive(Debug)]
 enum Token {
     IncPtr,
@@ -125,26 +149,3 @@ impl VM {
     }
 }
 
-const MEMSIZE: usize = 1000000;
-
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let programname = &args[0];
-    if args.len() != 2 {
-        eprintln!("ERROR: Please supply a brainflark file to run");
-        eprintln!("{} <brainflark_file>", programname);
-        return;
-    }
-    let filepath = &args[1];
-
-    let source = fs::read_to_string(filepath).expect("Should have been able to read the file");
-
-    let mut vm: VM = VM::from_str(&source);
-    if !vm.ready_to_run {
-	eprintln!("ERROR: Compilation failed. Will not run.");
-	return;
-    }
-    
-    vm.run();
-}
