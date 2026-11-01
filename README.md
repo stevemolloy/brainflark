@@ -8,4 +8,7 @@ $ ./brainflark sierpinski.b
 
 This is a simple interpreter for [a particular esoteric programming language](https://esolangs.org/wiki/Brainfuck).
 
-It's not complete, and was more just a personal challenge, but it can run the two example files that it ships with.
+It is fairly complete, and can run the various example files that it comes with.
+
+The example files come from [https://brainfuck.org/](https://brainfuck.org/).
+
